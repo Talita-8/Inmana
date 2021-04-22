@@ -2,13 +2,14 @@ defmodule InmanaWeb.Router do
   use InmanaWeb, :router
 
   pipeline :api do
-    plug :accepts, ["json"]
+    plug(:accepts, ["json"])
   end
 
   scope "/api", InmanaWeb do
-    pipe_through :api
+    pipe_through(:api)
 
-    get "/", WelcomeController, :index
+    get("/", WelcomeController, :index)
+    post("/restaurants", RestaurantsController, :create)
   end
 
   # Enables LiveDashboard only for development
@@ -22,8 +23,8 @@ defmodule InmanaWeb.Router do
     import Phoenix.LiveDashboard.Router
 
     scope "/" do
-      pipe_through [:fetch_session, :protect_from_forgery]
-      live_dashboard "/dashboard", metrics: InmanaWeb.Telemetry
+      pipe_through([:fetch_session, :protect_from_forgery])
+      live_dashboard("/dashboard", metrics: InmanaWeb.Telemetry)
     end
   end
 end
